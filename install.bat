@@ -1,38 +1,38 @@
 @echo off
-chcp 65001 >nul
-title OutlookRegister + Resin 代理池 - 一键安装启动脚本
+rem 脚本使用 ANSI(GBK) 编码保存，Windows 默认代码页即可
+title OutlookRegister + Resin ������ - һ����װ�����ű�
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
 
 echo ============================================
-echo   OutlookRegister 注册机 + Resin 代理池
-echo   新电脑一键安装启动脚本
+echo   OutlookRegister ע��� + Resin ������
+echo   �µ���һ����װ�����ű�
 echo ============================================
 echo.
 
 rem ============================================
-rem 0. 检测管理员权限（可选，部分操作需要）
+rem 0. ������ԱȨ�ޣ���ѡ�����ֲ�����Ҫ��
 rem ============================================
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [警告] 建议以管理员身份运行本脚本，否则某些操作可能失败。
-    echo        按任意键继续，或关闭窗口重新以管理员身份运行。
+    echo [����] �����Թ���Ա�������б��ű�������ĳЩ��������ʧ�ܡ�
+    echo        ���������������رմ��������Թ���Ա�������С�
     pause >nul
 )
 
 rem ============================================
-rem 1. 检测前置依赖
+rem 1. ���ǰ������
 rem ============================================
-echo [1/7] 检测前置依赖 ...
+echo [1/7] ���ǰ������ ...
 echo.
 
 where python >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [需要操作] 未检测到 Python，请安装 Python 3.10+
-    echo   下载地址：https://www.python.org/downloads/
-    echo   安装时务必勾选 "Add python.exe to PATH"
+    echo [��Ҫ����] δ��⵽ Python���밲װ Python 3.10+
+    echo   ���ص�ַ��https://www.python.org/downloads/
+    echo   ��װʱ��ع�ѡ "Add python.exe to PATH"
     echo.
-    echo 安装完成后请重新运行本脚本。
+    echo ��װ��ɺ����������б��ű���
     pause
     exit /b 1
 )
@@ -40,10 +40,10 @@ python --version
 
 where git >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [需要操作] 未检测到 Git，请安装 Git
-    echo   下载地址：https://git-scm.com/download/win
+    echo [��Ҫ����] δ��⵽ Git���밲װ Git
+    echo   ���ص�ַ��https://git-scm.com/download/win
     echo.
-    echo 安装完成后请重新运行本脚本。
+    echo ��װ��ɺ����������б��ű���
     pause
     exit /b 1
 )
@@ -51,19 +51,19 @@ git --version
 
 where curl >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [错误] 未检测到 curl，Windows 10+ 应自带 curl。
+    echo [����] δ��⵽ curl��Windows 10+ Ӧ�Դ� curl��
     pause
     exit /b 1
 )
 
 echo.
-echo [前置依赖] 全部就绪。
+echo [ǰ������] ȫ��������
 echo.
 
 rem ============================================
-rem 2. 创建目录结构
+rem 2. ����Ŀ¼�ṹ
 rem ============================================
-echo [2/7] 创建目录结构 ...
+echo [2/7] ����Ŀ¼�ṹ ...
 if not exist "D:\out" mkdir D:\out
 if not exist "D:\out\resin" mkdir D:\out\resin
 if not exist "D:\out\resin\data" mkdir D:\out\resin\data
@@ -72,33 +72,33 @@ if not exist "D:\out\resin\data\cache" mkdir D:\out\resin\data\cache
 if not exist "D:\out\resin\data\log" mkdir D:\out\resin\data\log
 if not exist "D:\out\easy_proxies" mkdir D:\out\easy_proxies
 if not exist "D:\out\easy_proxies\logs" mkdir D:\out\easy_proxies\logs
-echo [目录] 创建完成。
+echo [Ŀ¼] ������ɡ�
 echo.
 
 rem ============================================
-rem 3. 安装 easy_proxies 代理池
+rem 3. ��װ easy_proxies ������
 rem ============================================
-echo [3/7] 安装 easy_proxies 代理池 ...
+echo [3/7] ��װ easy_proxies ������ ...
 echo.
 
 if not exist "D:\out\easy_proxies\easy_proxies.exe" (
-    echo   正在下载 easy_proxies v2.3.0 ...
+    echo   �������� easy_proxies v2.3.0 ...
     curl -L -o "D:\out\easy_proxies\easy_proxies.exe" ^
         "https://github.com/daimon3332/easy-proxies/releases/download/v2.3.0/easy_proxies-v2.3.0-windows-amd64.exe"
     if !errorlevel! neq 0 (
-        echo   [下载失败] 请手动下载：
+        echo   [����ʧ��] ���ֶ����أ�
         echo   https://github.com/daimon3332/easy-proxies/releases/tag/v2.3.0
-        echo   下载后放入 D:\out\easy_proxies\easy_proxies.exe
+        echo   ���غ���� D:\out\easy_proxies\easy_proxies.exe
         pause
         exit /b 1
     )
-    echo   下载完成。
+    echo   ������ɡ�
 ) else (
-    echo   easy_proxies.exe 已存在，跳过下载。
+    echo   easy_proxies.exe �Ѵ��ڣ��������ء�
 )
 
 if not exist "D:\out\easy_proxies\config.yaml" (
-    echo   生成 config.yaml ...
+    echo   ���� config.yaml ...
     (
         echo mode: multi-port
         echo listener:
@@ -155,126 +155,126 @@ if not exist "D:\out\easy_proxies\config.yaml" (
         echo log_level: ""
         echo skip_cert_verify: false
     ) > "D:\out\easy_proxies\config.yaml"
-    echo   生成完成。
-    echo   [重要] 请编辑 D:\out\easy_proxies\config.yaml，在 subscriptions 中添加你的代理订阅链接。
+    echo   ������ɡ�
+    echo   [��Ҫ] ��༭ D:\out\easy_proxies\config.yaml���� subscriptions ��������Ĵ����������ӡ�
 ) else (
-    echo   config.yaml 已存在，跳过生成。
+    echo   config.yaml �Ѵ��ڣ��������ɡ�
 )
 
-echo [easy_proxies] 安装完成。
+echo [easy_proxies] ��װ��ɡ�
 echo.
 
 rem ============================================
-rem 4. 安装 resin 代理池
+rem 4. ��װ resin ������
 rem ============================================
-echo [4/7] 安装 resin 代理池 ...
+echo [4/7] ��װ resin ������ ...
 echo.
 
 if not exist "D:\out\resin\resin.exe" (
-    echo   正在下载 resin v1.2.0 ...
+    echo   �������� resin v1.2.0 ...
     curl -L -o "D:\out\resin\resin.zip" ^
         "https://github.com/Resinat/Resin/releases/download/v1.2.0/resin-windows-amd64.zip"
     if !errorlevel! neq 0 (
-        echo   [下载失败] 请手动下载：
+        echo   [����ʧ��] ���ֶ����أ�
         echo   https://github.com/Resinat/Resin/releases/tag/v1.2.0
-        echo   下载 resin-windows-amd64.zip 并解压到 D:\out\resin\
+        echo   ���� resin-windows-amd64.zip ����ѹ�� D:\out\resin\
         pause
         exit /b 1
     )
-    echo   正在解压 ...
+    echo   ���ڽ�ѹ ...
     powershell -Command "Expand-Archive -Path 'D:\out\resin\resin.zip' -DestinationPath 'D:\out\resin\' -Force"
     del "D:\out\resin\resin.zip"
     if exist "D:\out\resin\resin.exe" (
-        echo   解压完成。
+        echo   ��ѹ��ɡ�
     ) else (
-        echo   [解压失败] 请手动解压 resin-windows-amd64.zip 到 D:\out\resin\
+        echo   [��ѹʧ��] ���ֶ���ѹ resin-windows-amd64.zip �� D:\out\resin\
         pause
         exit /b 1
     )
 ) else (
-    echo   resin.exe 已存在，跳过下载。
+    echo   resin.exe �Ѵ��ڣ��������ء�
 )
 
 if not exist "D:\out\resin\.env" (
-    echo   生成 .env 配置文件 ...
+    echo   ���� .env �����ļ� ...
     (
-        echo # 后台管理密钥
+        echo # ��̨������Կ
         echo RESIN_ADMIN_TOKEN=zgy2322317886
         echo RESIN_PROXY_TOKEN="zgy2322317886"
         echo.
-        echo # 数据存储目录
+        echo # ���ݴ洢Ŀ¼
         echo RESIN_STATE_DIR=./data/state
         echo RESIN_CACHE_DIR=./data/cache
         echo RESIN_LOG_DIR=./data/log
         echo.
-        echo # 服务监听端口
+        echo # ��������˿�
         echo RESIN_LISTEN_ADDRESS=0.0.0.0
         echo RESIN_PORT=2260
         echo.
-        echo # 核心：走本地Clash代理（根据实际代理端口修改）
+        echo # ���ģ��߱���Clash����������ʵ�ʴ����˿��޸ģ�
         echo HTTP_PROXY=http://127.0.0.1:7897
         echo HTTPS_PROXY=http://127.0.0.1:7897
         echo ALL_PROXY=socks5://127.0.0.1:7897
         echo.
-        echo # 本地地址跳过代理，防止死循环
+        echo # ���ص�ַ������������ֹ��ѭ��
         echo NO_PROXY=127.0.0.1,localhost
     ) > "D:\out\resin\.env"
-    echo   生成完成。
-    echo   [注意] 如果使用不同的代理端口，请修改 .env 中的 HTTP_PROXY/HTTPS_PROXY。
+    echo   ������ɡ�
+    echo   [ע��] ���ʹ�ò�ͬ�Ĵ����˿ڣ����޸� .env �е� HTTP_PROXY/HTTPS_PROXY��
 ) else (
-    echo   .env 已存在，跳过生成。
+    echo   .env �Ѵ��ڣ��������ɡ�
 )
 
-echo [resin] 安装完成。
+echo [resin] ��װ��ɡ�
 echo.
 
 rem ============================================
-rem 5. 安装 OutlookRegister
+rem 5. ��װ OutlookRegister
 rem ============================================
-echo [5/7] 安装 OutlookRegister 注册机 ...
+echo [5/7] ��װ OutlookRegister ע��� ...
 echo.
 
 if not exist "D:\out\OutlookRegister\.git" (
-    echo   正在从 GitHub 克隆 OutlookRegister ...
+    echo   ���ڴ� GitHub ��¡ OutlookRegister ...
     git clone https://github.com/zhonggy/OutlookRegister.git "D:\out\OutlookRegister"
     if !errorlevel! neq 0 (
-        echo   [克隆失败] 请检查网络连接或手动下载：
+        echo   [��¡ʧ��] �����������ӻ��ֶ����أ�
         echo   https://github.com/zhonggy/OutlookRegister
         pause
         exit /b 1
     )
-    echo   克隆完成。
+    echo   ��¡��ɡ�
 ) else (
-    echo   OutlookRegister 已存在，执行 git pull 更新 ...
+    echo   OutlookRegister �Ѵ��ڣ�ִ�� git pull ���� ...
     cd /d "D:\out\OutlookRegister" && git pull
 )
 
 cd /d "D:\out\OutlookRegister"
 
 if not exist ".venv" (
-    echo   创建 Python 虚拟环境 ...
+    echo   ���� Python ���⻷�� ...
     python -m venv .venv
 )
 
-echo   安装 Python 依赖 ...
+echo   ��װ Python ���� ...
 ".venv\Scripts\python" -m pip install -q --upgrade pip
 ".venv\Scripts\pip" install -q -r requirements.txt
 
-echo   安装 Chromium 浏览器（用于注册流程）...
+echo   ��װ Chromium �����������ע�����̣�...
 ".venv\Scripts\patchright" install chromium
 
 echo.
-echo [OutlookRegister] 安装完成。
+echo [OutlookRegister] ��װ��ɡ�
 echo.
 
 rem ============================================
-rem 6. 生成 config.json
+rem 6. ���� config.json
 rem ============================================
-echo [6/7] 生成配置文件 ...
+echo [6/7] ���������ļ� ...
 echo.
 
 if not exist "D:\out\OutlookRegister\config.json" (
-    echo   生成 config.json ...
+    echo   ���� config.json ...
     (
         echo {
         echo   "email_suffix": "@outlook.com",
@@ -334,79 +334,79 @@ if not exist "D:\out\OutlookRegister\config.json" (
         echo   }
         echo }
     ) > "D:\out\OutlookRegister\config.json"
-    echo   生成完成。
+    echo   ������ɡ�
 ) else (
-    echo   config.json 已存在，跳过生成。
+    echo   config.json �Ѵ��ڣ��������ɡ�
 )
 
-echo [配置文件] 生成完成。
+echo [�����ļ�] ������ɡ�
 echo.
 
 rem ============================================
-rem 7. 启动所有服务
+rem 7. �������з���
 rem ============================================
-echo [7/7] 启动所有服务 ...
+echo [7/7] �������з��� ...
 echo.
 
-rem ---- 7a. 启动 resin 代理池 ----
-echo   [resin] 正在启动 ...
+rem ---- 7a. ���� resin ������ ----
+echo   [resin] �������� ...
 if exist "D:\out\resin\resin.exe" (
     tasklist /FI "IMAGENAME eq resin.exe" 2>nul | find /I "resin.exe" >nul
     if !errorlevel!==0 (
-        echo   [resin] 已在运行中，跳过。
+        echo   [resin] ���������У�������
     ) else (
         start "resin" /D "D:\out\resin" "D:\out\resin\resin.exe"
-        echo   [resin] 已启动（端口 2260）
+        echo   [resin] ���������˿� 2260��
     )
 ) else (
-    echo   [resin] resin.exe 不存在，跳过启动。
+    echo   [resin] resin.exe �����ڣ�����������
 )
 
-rem ---- 7b. 启动 easy_proxies 代理池 ----
-echo   [easy_proxies] 正在启动 ...
+rem ---- 7b. ���� easy_proxies ������ ----
+echo   [easy_proxies] �������� ...
 if exist "D:\out\easy_proxies\easy_proxies.exe" (
     tasklist /FI "IMAGENAME eq easy_proxies.exe" 2>nul | find /I "easy_proxies.exe" >nul
     if !errorlevel!==0 (
-        echo   [easy_proxies] 已在运行中，跳过。
+        echo   [easy_proxies] ���������У�������
     ) else (
         start "easy_proxies" /D "D:\out\easy_proxies" "D:\out\easy_proxies\easy_proxies.exe" --config "D:\out\easy_proxies\config.yaml"
-        echo   [easy_proxies] 已启动（管理端口 9091，代理端口池 24000+）
+        echo   [easy_proxies] �������������˿� 9091�������˿ڳ� 24000+��
     )
 ) else (
-    echo   [easy_proxies] easy_proxies.exe 不存在，跳过启动。
+    echo   [easy_proxies] easy_proxies.exe �����ڣ�����������
 )
 
-rem ---- 7c. 启动 OutlookRegister Web 控制台 ----
-echo   [OutlookRegister 控制台] 正在启动 ...
+rem ---- 7c. ���� OutlookRegister Web ����̨ ----
+echo   [OutlookRegister ����̨] �������� ...
 if exist "D:\out\OutlookRegister\web_console.py" (
     netstat -ano | findstr ":9090" | findstr LISTENING >nul
     if !errorlevel!==0 (
-        echo   [控制台] 已在运行中（9090），跳过。
+        echo   [����̨] ���������У�9090����������
     ) else (
         start "web_console" /D "D:\out\OutlookRegister" "D:\out\OutlookRegister\.venv\Scripts\python" "D:\out\OutlookRegister\web_console.py" --port 9090
-        echo   [控制台] 已启动（端口 9090）
+        echo   [����̨] ���������˿� 9090��
     )
 ) else (
-    echo   [控制台] web_console.py 不存在，跳过启动。
+    echo   [����̨] web_console.py �����ڣ�����������
 )
 
 echo.
 echo ============================================
-echo   安装启动完成！
+echo   ��װ������ɣ�
 echo ============================================
 echo.
-echo   服务地址：
-echo     Resin 管理面板：   http://127.0.0.1:2260
-echo     注册机控制台：     http://127.0.0.1:9090
-echo     easy_proxies 管理：http://127.0.0.1:9091
+echo   �����ַ��
+echo     Resin ������壺   http://127.0.0.1:2260
+echo     ע�������̨��     http://127.0.0.1:9090
+echo     easy_proxies ������http://127.0.0.1:9091
 echo.
-echo   后续配置：
-echo     1. 编辑 D:\out\easy_proxies\config.yaml
-echo         - 在 subscriptions 中添加代理订阅链接
-echo     2. 编辑 D:\out\resin\.env（如需修改代理端口）
-echo     3. 如需调整注册参数，编辑 D:\out\OutlookRegister\config.json
+echo   �������ã�
+echo     1. �༭ D:\out\easy_proxies\config.yaml
+echo         - �� subscriptions �����Ӵ�����������
+echo     2. �༭ D:\out\resin\.env�������޸Ĵ����˿ڣ�
+echo     3. �������ע��������༭ D:\out\OutlookRegister\config.json
 echo.
-echo   按任意键打开注册机控制台，或关闭窗口结束。
+echo   ���������ע�������̨����رմ��ڽ�����
 echo.
 pause >nul
 
