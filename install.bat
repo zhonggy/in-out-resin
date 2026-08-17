@@ -225,18 +225,33 @@ if not exist ".venv" (
     echo   创建虚拟环境 ...
     python -m venv .venv
 )
-echo   为系统 Python 安装 requests（兜底，防止控制台被裸 python 启动时缺库）...
+echo   为系统 Python 安装 requests（兜底）...
 python -m pip install -q requests
 
 echo   安装 Python 依赖 ...
 ".venv\Scripts\python" -m pip install -q --upgrade pip
 ".venv\Scripts\pip" install -q -r requirements.txt
+if !errorlevel! neq 0 (
+    echo   [重试] pip 失败，改用清华镜像 ...
+    ".venv\Scripts\pip" install -q -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+    if !errorlevel! neq 0 (
+        echo   [重试] 镜像失败，走本地代理 127.0.0.1:7897 ...
+        set "HTTP_PROXY=http://127.0.0.1:7897"
+        set "HTTPS_PROXY=http://127.0.0.1:7897"
+        ".venv\Scripts\pip" install -q -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
+        if !errorlevel! neq 0 (
+            echo   [错误] Python 依赖安装失败，请检查网络/代理后重新运行本脚本。
+            pause
+            exit /b 1
+        )
+    )
+)
 
 echo   校验 requests 依赖 ...
 ".venv\Scripts\python" -c "import requests" >nul 2>nul
 if !errorlevel! neq 0 (
-    echo   [重试] 单独安装 requests ...
-    ".venv\Scripts\pip" install -q requests
+    echo   [重试] 单独安装 requests（清华镜像）...
+    ".venv\Scripts\pip" install -q -i https://pypi.tuna.tsinghua.edu.cn/simple requests
     ".venv\Scripts\python" -c "import requests" >nul 2>nul
     if !errorlevel! neq 0 (
         echo   [错误] requests 安装失败，请检查网络后重试。
@@ -245,8 +260,15 @@ if !errorlevel! neq 0 (
     )
 )
 
-echo   安装 Chromium（注册流程浏览器）...
+echo   安装 Chromium（注册流程浏览器，国内镜像加速）...
+set "PLAYWRIGHT_DOWNLOAD_HOST=https://npmmirror.com/mirrors/playwright/"
 ".venv\Scripts\patchright" install chromium
+if !errorlevel! neq 0 (
+    echo   [重试] 镜像下载失败，走本地代理 127.0.0.1:7897 ...
+    set "HTTP_PROXY=http://127.0.0.1:7897"
+    set "HTTPS_PROXY=http://127.0.0.1:7897"
+    ".venv\Scripts\patchright" install chromium
+)
 echo [OutlookRegister] 安装完成。
 echo.
 
