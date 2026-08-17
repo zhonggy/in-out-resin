@@ -1,280 +1,243 @@
 @echo off
-rem è„šæœ¬ä½¿ç”¨ ANSI(GBK) ç¼–ç ä¿å­˜ï¼ŒWindows é»˜è®¤ä»£ç é¡µå³å¯
-title OutlookRegister + Resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - Ò»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½
+chcp 936 >nul
+title OutlookRegister + Resin °²×°Æô¶¯½Å±¾
 cd /d "%~dp0"
 setlocal enabledelayedexpansion
+set "BASE=D:\out"
 
 echo ============================================
-echo   OutlookRegister ×¢ï¿½ï¿½ï¿½ + Resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-echo   ï¿½Âµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½
+echo   OutlookRegister ×¢²á»ú + Resin ´úÀí³Ø
+echo   ĞÂµçÄÔÒ»¼ü°²×°Æô¶¯½Å±¾
 echo ============================================
 echo.
 
-rem ============================================
-rem 0. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±È¨ï¿½Ş£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½
-rem ============================================
+rem ========== 0. ¹ÜÀíÔ±È¨ÏŞÌáÊ¾ ==========
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [ï¿½ï¿½ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³Ğ©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Ü¡ï¿½
-    echo        ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø±Õ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡ï¿½
+    echo [ÌáÊ¾] ½¨ÒéÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ±¾½Å±¾¡£
+    echo        °´ÈÎÒâ¼ü¼ÌĞø£¬»ò¹Ø±Õ´°¿ÚºóÓÒ¼ü"ÒÔ¹ÜÀíÔ±Éí·İÔËĞĞ"¡£
     pause >nul
 )
 
-rem ============================================
-rem 1. ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-rem ============================================
-echo [1/7] ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
+rem ========== 1. ¼ì²éÇ°ÖÃÒÀÀµ ==========
+echo [1/7] ¼ì²éÇ°ÖÃÒÀÀµ ...
 echo.
 
 where python >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½] Î´ï¿½ï¿½âµ½ Pythonï¿½ï¿½ï¿½ë°²×° Python 3.10+
-    echo   ï¿½ï¿½ï¿½Øµï¿½Ö·ï¿½ï¿½https://www.python.org/downloads/
-    echo   ï¿½ï¿½×°Ê±ï¿½ï¿½Ø¹ï¿½Ñ¡ "Add python.exe to PATH"
+    echo [È±ÉÙ] Î´ÕÒµ½ Python£¬ÇëÏÈ°²×° Python 3.10+
+    echo   ÏÂÔØ£ºhttps://www.python.org/downloads/
+    echo   °²×°Ê±Îñ±Ø¹´Ñ¡ "Add python.exe to PATH"
     echo.
-    echo ï¿½ï¿½×°ï¿½ï¿½Éºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½Å±ï¿½ï¿½ï¿½
+    echo   °²×°Íê³ÉºóÖØĞÂÔËĞĞ±¾½Å±¾¡£
     pause
     exit /b 1
 )
+echo   Python:
 python --version
 
 where git >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½] Î´ï¿½ï¿½âµ½ Gitï¿½ï¿½ï¿½ë°²×° Git
-    echo   ï¿½ï¿½ï¿½Øµï¿½Ö·ï¿½ï¿½https://git-scm.com/download/win
+    echo [È±ÉÙ] Î´ÕÒµ½ Git£¬ÇëÏÈ°²×° Git
+    echo   ÏÂÔØ£ºhttps://git-scm.com/download/win
     echo.
-    echo ï¿½ï¿½×°ï¿½ï¿½Éºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½Å±ï¿½ï¿½ï¿½
+    echo   °²×°Íê³ÉºóÖØĞÂÔËĞĞ±¾½Å±¾¡£
     pause
     exit /b 1
 )
+echo   Git:
 git --version
 
 where curl >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [ï¿½ï¿½ï¿½ï¿½] Î´ï¿½ï¿½âµ½ curlï¿½ï¿½Windows 10+ Ó¦ï¿½Ô´ï¿½ curlï¿½ï¿½
+    echo [´íÎó] Î´ÕÒµ½ curl£¨Windows 10 ¼°ÒÔÉÏÏµÍ³×Ô´ø£©¡£
     pause
     exit /b 1
 )
 
 echo.
-echo [Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½] È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+echo [ÒÀÀµ¼ì²é] È«²¿¾ÍĞ÷¡£
 echo.
 
-rem ============================================
-rem 2. ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½á¹¹
-rem ============================================
-echo [2/7] ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½á¹¹ ...
-if not exist "D:\out" mkdir D:\out
-if not exist "D:\out\resin" mkdir D:\out\resin
-if not exist "D:\out\resin\data" mkdir D:\out\resin\data
-if not exist "D:\out\resin\data\state" mkdir D:\out\resin\data\state
-if not exist "D:\out\resin\data\cache" mkdir D:\out\resin\data\cache
-if not exist "D:\out\resin\data\log" mkdir D:\out\resin\data\log
-if not exist "D:\out\easy_proxies" mkdir D:\out\easy_proxies
-if not exist "D:\out\easy_proxies\logs" mkdir D:\out\easy_proxies\logs
-echo [Ä¿Â¼] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+rem ========== 2. ´´½¨Ä¿Â¼ ==========
+echo [2/7] ´´½¨Ä¿Â¼½á¹¹ ...
+if not exist "%BASE%" mkdir "%BASE%"
+if not exist "%BASE%\resin" mkdir "%BASE%\resin"
+if not exist "%BASE%\resin\data" mkdir "%BASE%\resin\data"
+if not exist "%BASE%\resin\data\state" mkdir "%BASE%\resin\data\state"
+if not exist "%BASE%\resin\data\cache" mkdir "%BASE%\resin\data\cache"
+if not exist "%BASE%\resin\data\log" mkdir "%BASE%\resin\data\log"
+if not exist "%BASE%\easy_proxies" mkdir "%BASE%\easy_proxies"
+if not exist "%BASE%\easy_proxies\logs" mkdir "%BASE%\easy_proxies\logs"
+echo [Ä¿Â¼] ´´½¨Íê³É¡£
 echo.
 
-rem ============================================
-rem 3. ï¿½ï¿½×° easy_proxies ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-rem ============================================
-echo [3/7] ï¿½ï¿½×° easy_proxies ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
+rem ========== 3. easy_proxies ´úÀí³Ø ==========
+echo [3/7] °²×° easy_proxies ´úÀí³Ø ...
 echo.
-
-if not exist "D:\out\easy_proxies\easy_proxies.exe" (
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ easy_proxies v2.3.0 ...
-    curl -L -o "D:\out\easy_proxies\easy_proxies.exe" ^
+if not exist "%BASE%\easy_proxies\easy_proxies.exe" (
+    echo   ÕıÔÚÏÂÔØ easy_proxies v2.3.0 ...
+    curl -L -o "%BASE%\easy_proxies\easy_proxies.exe" ^
         "https://github.com/daimon3332/easy-proxies/releases/download/v2.3.0/easy_proxies-v2.3.0-windows-amd64.exe"
     if !errorlevel! neq 0 (
-        echo   [ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½] ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½Ø£ï¿½
+        echo   [ÏÂÔØÊ§°Ü] ÇëÊÖ¶¯ÏÂÔØ£º
         echo   https://github.com/daimon3332/easy-proxies/releases/tag/v2.3.0
-        echo   ï¿½ï¿½ï¿½Øºï¿½ï¿½ï¿½ï¿½ D:\out\easy_proxies\easy_proxies.exe
+        echo   ½« easy_proxies-v2.3.0-windows-amd64.exe ·Åµ½ %BASE%\easy_proxies\ ²¢¸ÄÃûÎª easy_proxies.exe
         pause
         exit /b 1
     )
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+    echo   ÏÂÔØÍê³É¡£
 ) else (
-    echo   easy_proxies.exe ï¿½Ñ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¡ï¿½
+    echo   easy_proxies.exe ÒÑ´æÔÚ£¬Ìø¹ıÏÂÔØ¡£
 )
 
-if not exist "D:\out\easy_proxies\config.yaml" (
-    echo   ï¿½ï¿½ï¿½ï¿½ config.yaml ...
+if not exist "%BASE%\easy_proxies\config.yaml" (
+    echo   Éú³É config.yaml ...
     (
-        echo mode: multi-port
-        echo listener:
-        echo   address: 127.0.0.1
-        echo   port: 2323
-        echo   username: ""
-        echo   password: ""
-        echo multi_port:
-        echo   address: 127.0.0.1
-        echo   base_port: 24000
-        echo   username: ""
-        echo   password: ""
-        echo pool:
-        echo   mode: rotate
-        echo   failure_threshold: 2
-        echo   blacklist_duration: 10m0s
-        echo   rotation_interval: 2m0s
-        echo management:
-        echo   enabled: true
-        echo   listen: 127.0.0.1:9091
-        echo   probe_target: https://www.gstatic.com/generate_204
-        echo   password: ""
-        echo subscription_refresh:
-        echo   enabled: true
-        echo   interval: 1h0m0s
-        echo   timeout: 30s
-        echo   health_check_timeout: 5s
-        echo   drain_timeout: 30s
-        echo   min_available_nodes: 1
-        echo   test_204: true
-        echo geoip:
-        echo   enabled: false
-        echo   database_path: ./GeoLite2-Country.mmdb
-        echo   listen: ""
-        echo   port: 0
-        echo   auto_update_enabled: true
-        echo   auto_update_interval: 24h0m0s
-        echo log:
-        echo   output: stdout
-        echo   file: D:\out\easy_proxies\logs\easy_proxies.log
-        echo   max_size: 50
-        echo   max_backups: 3
-        echo   max_age: 7
-        echo   compress: false
-        echo webdav:
-        echo   address: ""
-        echo   username: ""
-        echo   password: ""
-        echo   folder: /easy_proxies
-        echo subscriptions: []
-        echo nodes: []
-        echo nodes_file: ""
-        echo external_ip: ""
-        echo log_level: ""
-        echo skip_cert_verify: false
-    ) > "D:\out\easy_proxies\config.yaml"
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
-    echo   [ï¿½ï¿½Òª] ï¿½ï¿½à¼­ D:\out\easy_proxies\config.yamlï¿½ï¿½ï¿½ï¿½ subscriptions ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½
+      echo mode: multi-port
+      echo listener:
+      echo   address: 127.0.0.1
+      echo   port: 2323
+      echo   username: ""
+      echo   password: ""
+      echo multi_port:
+      echo   address: 127.0.0.1
+      echo   base_port: 24000
+      echo   username: ""
+      echo   password: ""
+      echo pool:
+      echo   mode: rotate
+      echo   failure_threshold: 2
+      echo   blacklist_duration: 10m0s
+      echo   rotation_interval: 2m0s
+      echo management:
+      echo   enabled: true
+      echo   listen: 127.0.0.1:9091
+      echo   probe_target: https://www.gstatic.com/generate_204
+      echo   password: ""
+      echo subscription_refresh:
+      echo   enabled: true
+      echo   interval: 1h0m0s
+      echo   timeout: 30s
+      echo   health_check_timeout: 5s
+      echo   drain_timeout: 30s
+      echo   min_available_nodes: 1
+      echo   test_204: true
+      echo log:
+      echo   output: stdout
+      echo   file: %BASE%\easy_proxies\logs\easy_proxies.log
+      echo   max_size: 50
+      echo   max_backups: 3
+      echo   max_age: 7
+      echo   compress: false
+      echo subscriptions: []
+      echo nodes: []
+      echo nodes_file: ""
+      echo skip_cert_verify: false
+    ) > "%BASE%\easy_proxies\config.yaml"
+    echo   ÒÑÉú³É¡£
+    echo   [ÖØÒª] Çë±à¼­ %BASE%\easy_proxies\config.yaml£¬ÔÚ subscriptions ÖĞÌí¼Ó´úÀí¶©ÔÄÁ´½Ó¡£
 ) else (
-    echo   config.yaml ï¿½Ñ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+    echo   config.yaml ÒÑ´æÔÚ£¬Ìø¹ıÉú³É¡£
 )
-
-echo [easy_proxies] ï¿½ï¿½×°ï¿½ï¿½É¡ï¿½
+echo [easy_proxies] °²×°Íê³É¡£
 echo.
 
-rem ============================================
-rem 4. ï¿½ï¿½×° resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-rem ============================================
-echo [4/7] ï¿½ï¿½×° resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
+rem ========== 4. resin ´úÀí³Ø ==========
+echo [4/7] °²×° resin ´úÀí³Ø ...
 echo.
-
-if not exist "D:\out\resin\resin.exe" (
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ resin v1.2.0 ...
-    curl -L -o "D:\out\resin\resin.zip" ^
+if not exist "%BASE%\resin\resin.exe" (
+    echo   ÕıÔÚÏÂÔØ resin v1.2.0 ...
+    curl -L -o "%BASE%\resin\resin.zip" ^
         "https://github.com/Resinat/Resin/releases/download/v1.2.0/resin-windows-amd64.zip"
     if !errorlevel! neq 0 (
-        echo   [ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½] ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½Ø£ï¿½
+        echo   [ÏÂÔØÊ§°Ü] ÇëÊÖ¶¯ÏÂÔØ£º
         echo   https://github.com/Resinat/Resin/releases/tag/v1.2.0
-        echo   ï¿½ï¿½ï¿½ï¿½ resin-windows-amd64.zip ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ D:\out\resin\
+        echo   ÏÂÔØ resin-windows-amd64.zip ºó½âÑ¹µ½ %BASE%\resin\
         pause
         exit /b 1
     )
-    echo   ï¿½ï¿½ï¿½Ú½ï¿½Ñ¹ ...
-    powershell -Command "Expand-Archive -Path 'D:\out\resin\resin.zip' -DestinationPath 'D:\out\resin\' -Force"
-    del "D:\out\resin\resin.zip"
-    if exist "D:\out\resin\resin.exe" (
-        echo   ï¿½ï¿½Ñ¹ï¿½ï¿½É¡ï¿½
+    echo   ÕıÔÚ½âÑ¹ ...
+    powershell -Command "Expand-Archive -Path '%BASE%\resin\resin.zip' -DestinationPath '%BASE%\resin\' -Force"
+    del "%BASE%\resin\resin.zip" >nul 2>nul
+    if exist "%BASE%\resin\resin.exe" (
+        echo   ½âÑ¹Íê³É¡£
     ) else (
-        echo   [ï¿½ï¿½Ñ¹Ê§ï¿½ï¿½] ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½Ñ¹ resin-windows-amd64.zip ï¿½ï¿½ D:\out\resin\
+        echo   [½âÑ¹Ê§°Ü] ÇëÊÖ¶¯½âÑ¹ resin-windows-amd64.zip µ½ %BASE%\resin\
         pause
         exit /b 1
     )
 ) else (
-    echo   resin.exe ï¿½Ñ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¡ï¿½
+    echo   resin.exe ÒÑ´æÔÚ£¬Ìø¹ıÏÂÔØ¡£
 )
 
-if not exist "D:\out\resin\.env" (
-    echo   ï¿½ï¿½ï¿½ï¿½ .env ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ ...
+if not exist "%BASE%\resin\.env" (
+    echo   Éú³É .env ÅäÖÃ ...
     (
-        echo # ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿
+        echo # ºóÌ¨¹ÜÀíÃÜÔ¿
         echo RESIN_ADMIN_TOKEN=zgy2322317886
         echo RESIN_PROXY_TOKEN="zgy2322317886"
         echo.
-        echo # ï¿½ï¿½ï¿½İ´æ´¢Ä¿Â¼
+        echo # Êı¾İ´æ´¢Ä¿Â¼
         echo RESIN_STATE_DIR=./data/state
         echo RESIN_CACHE_DIR=./data/cache
         echo RESIN_LOG_DIR=./data/log
         echo.
-        echo # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½
+        echo # ·şÎñ¼àÌı¶Ë¿Ú
         echo RESIN_LISTEN_ADDRESS=0.0.0.0
         echo RESIN_PORT=2260
         echo.
-        echo # ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ß±ï¿½ï¿½ï¿½Clashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê´ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ï¿½Ş¸Ä£ï¿½
+        echo # ×ß±¾µØ Clash ´úÀí£¨°´Êµ¼Ê¶Ë¿ÚĞŞ¸Ä£©
         echo HTTP_PROXY=http://127.0.0.1:7897
         echo HTTPS_PROXY=http://127.0.0.1:7897
         echo ALL_PROXY=socks5://127.0.0.1:7897
         echo.
-        echo # ï¿½ï¿½ï¿½Øµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½Ñ­ï¿½ï¿½
+        echo # ±¾µØµØÖ·Ìø¹ı´úÀí
         echo NO_PROXY=127.0.0.1,localhost
-    ) > "D:\out\resin\.env"
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
-    echo   [×¢ï¿½ï¿½] ï¿½ï¿½ï¿½Ê¹ï¿½Ã²ï¿½Í¬ï¿½Ä´ï¿½ï¿½ï¿½ï¿½Ë¿Ú£ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½ .env ï¿½Ğµï¿½ HTTP_PROXY/HTTPS_PROXYï¿½ï¿½
+    ) > "%BASE%\resin\.env"
+    echo   ÒÑÉú³É¡£
 ) else (
-    echo   .env ï¿½Ñ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+    echo   .env ÒÑ´æÔÚ£¬Ìø¹ıÉú³É¡£
 )
-
-echo [resin] ï¿½ï¿½×°ï¿½ï¿½É¡ï¿½
+echo [resin] °²×°Íê³É¡£
 echo.
 
-rem ============================================
-rem 5. ï¿½ï¿½×° OutlookRegister
-rem ============================================
-echo [5/7] ï¿½ï¿½×° OutlookRegister ×¢ï¿½ï¿½ï¿½ ...
+rem ========== 5. OutlookRegister ×¢²á»ú ==========
+echo [5/7] °²×° OutlookRegister ×¢²á»ú ...
 echo.
-
-if not exist "D:\out\OutlookRegister\.git" (
-    echo   ï¿½ï¿½ï¿½Ú´ï¿½ GitHub ï¿½ï¿½Â¡ OutlookRegister ...
-    git clone https://github.com/zhonggy/OutlookRegister.git "D:\out\OutlookRegister"
+if not exist "%BASE%\OutlookRegister\.git" (
+    echo   ÕıÔÚ´Ó GitHub ¿ËÂ¡ ...
+    git clone https://github.com/zhonggy/OutlookRegister.git "%BASE%\OutlookRegister"
     if !errorlevel! neq 0 (
-        echo   [ï¿½ï¿½Â¡Ê§ï¿½ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó»ï¿½ï¿½Ö¶ï¿½ï¿½ï¿½ï¿½Ø£ï¿½
+        echo   [¿ËÂ¡Ê§°Ü] Çë¼ì²éÍøÂç£¬»òÊÖ¶¯ÏÂÔØ£º
         echo   https://github.com/zhonggy/OutlookRegister
         pause
         exit /b 1
     )
-    echo   ï¿½ï¿½Â¡ï¿½ï¿½É¡ï¿½
+    echo   ¿ËÂ¡Íê³É¡£
 ) else (
-    echo   OutlookRegister ï¿½Ñ´ï¿½ï¿½Ú£ï¿½Ö´ï¿½ï¿½ git pull ï¿½ï¿½ï¿½ï¿½ ...
-    cd /d "D:\out\OutlookRegister" && git pull
+    echo   OutlookRegister ÒÑ´æÔÚ£¬Ö´ĞĞ git pull ¸üĞÂ ...
+    cd /d "%BASE%\OutlookRegister" && git pull
 )
-
-cd /d "D:\out\OutlookRegister"
+cd /d "%BASE%\OutlookRegister"
 
 if not exist ".venv" (
-    echo   ï¿½ï¿½ï¿½ï¿½ Python ï¿½ï¿½ï¿½â»·ï¿½ï¿½ ...
+    echo   ´´½¨ĞéÄâ»·¾³ ...
     python -m venv .venv
 )
-
-echo   ï¿½ï¿½×° Python ï¿½ï¿½ï¿½ï¿½ ...
+echo   °²×° Python ÒÀÀµ ...
 ".venv\Scripts\python" -m pip install -q --upgrade pip
 ".venv\Scripts\pip" install -q -r requirements.txt
-
-echo   ï¿½ï¿½×° Chromium ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½...
+echo   °²×° Chromium£¨×¢²áÁ÷³Ìä¯ÀÀÆ÷£©...
 ".venv\Scripts\patchright" install chromium
-
-echo.
-echo [OutlookRegister] ï¿½ï¿½×°ï¿½ï¿½É¡ï¿½
+echo [OutlookRegister] °²×°Íê³É¡£
 echo.
 
-rem ============================================
-rem 6. ï¿½ï¿½ï¿½ï¿½ config.json
-rem ============================================
-echo [6/7] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ ...
+rem ========== 6. Éú³É×¢²á»úÅäÖÃ ==========
+echo [6/7] Éú³É×¢²á»úÅäÖÃ ...
 echo.
-
-if not exist "D:\out\OutlookRegister\config.json" (
-    echo   ï¿½ï¿½ï¿½ï¿½ config.json ...
+if not exist "%BASE%\OutlookRegister\config.json" (
+    echo   Éú³É config.json ...
     (
         echo {
         echo   "email_suffix": "@outlook.com",
@@ -333,81 +296,89 @@ if not exist "D:\out\OutlookRegister\config.json" (
         echo     "api_key": "omk_92c9c27bea0d3fc686697cbd62cbe9e99dc1da42bf563999"
         echo   }
         echo }
-    ) > "D:\out\OutlookRegister\config.json"
-    echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+    ) > "%BASE%\OutlookRegister\config.json"
+    echo   ÒÑÉú³É¡£
 ) else (
-    echo   config.json ï¿½Ñ´ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+    echo   config.json ÒÑ´æÔÚ£¬Ìø¹ıÉú³É¡£
 )
-
-echo [ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¡ï¿½
+echo [ÅäÖÃ] Éú³ÉÍê³É¡£
 echo.
 
-rem ============================================
-rem 7. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ·ï¿½ï¿½ï¿½
-rem ============================================
-echo [7/7] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ·ï¿½ï¿½ï¿½ ...
+rem ========== 7. Æô¶¯·şÎñ ==========
+echo [7/7] Æô¶¯ËùÓĞ·şÎñ ...
 echo.
 
-rem ---- 7a. ï¿½ï¿½ï¿½ï¿½ resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ----
-echo   [resin] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
-if exist "D:\out\resin\resin.exe" (
+rem ---- 7a. resin ----
+echo   [resin] Æô¶¯ÖĞ ...
+if exist "%BASE%\resin\resin.exe" (
     tasklist /FI "IMAGENAME eq resin.exe" 2>nul | find /I "resin.exe" >nul
     if !errorlevel!==0 (
-        echo   [resin] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        echo   [resin] ÒÑÔÚÔËĞĞ£¬Ìø¹ı¡£
     ) else (
-        start "resin" /D "D:\out\resin" "D:\out\resin\resin.exe"
-        echo   [resin] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ 2260ï¿½ï¿½
+        start "resin" /D "%BASE%\resin" "%BASE%\resin\resin.exe"
+        echo   [resin] ÒÑÆô¶¯£¨¶Ë¿Ú 2260£©
     )
 ) else (
-    echo   [resin] resin.exe ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    echo   [resin] Î´ÕÒµ½ resin.exe£¬Ìø¹ıÆô¶¯¡£
 )
 
-rem ---- 7b. ï¿½ï¿½ï¿½ï¿½ easy_proxies ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ----
-echo   [easy_proxies] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
-if exist "D:\out\easy_proxies\easy_proxies.exe" (
+rem ---- 7b. easy_proxies ----
+echo   [easy_proxies] Æô¶¯ÖĞ ...
+if exist "%BASE%\easy_proxies\easy_proxies.exe" (
     tasklist /FI "IMAGENAME eq easy_proxies.exe" 2>nul | find /I "easy_proxies.exe" >nul
     if !errorlevel!==0 (
-        echo   [easy_proxies] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        echo   [easy_proxies] ÒÑÔÚÔËĞĞ£¬Ìø¹ı¡£
     ) else (
-        start "easy_proxies" /D "D:\out\easy_proxies" "D:\out\easy_proxies\easy_proxies.exe" --config "D:\out\easy_proxies\config.yaml"
-        echo   [easy_proxies] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ 9091ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿Ú³ï¿½ 24000+ï¿½ï¿½
+        start "easy_proxies" /D "%BASE%\easy_proxies" "%BASE%\easy_proxies\easy_proxies.exe" --config "%BASE%\easy_proxies\config.yaml"
+        echo   [easy_proxies] ÒÑÆô¶¯£¨¹ÜÀí¶Ë¿Ú 9091£¬´úÀí¶Ë¿Ú³Ø 24000+£©
     )
 ) else (
-    echo   [easy_proxies] easy_proxies.exe ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    echo   [easy_proxies] Î´ÕÒµ½ easy_proxies.exe£¬Ìø¹ıÆô¶¯¡£
 )
 
-rem ---- 7c. ï¿½ï¿½ï¿½ï¿½ OutlookRegister Web ï¿½ï¿½ï¿½ï¿½Ì¨ ----
-echo   [OutlookRegister ï¿½ï¿½ï¿½ï¿½Ì¨] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ...
-if exist "D:\out\OutlookRegister\web_console.py" (
+rem ---- 7c. ×¢²á»ú¿ØÖÆÌ¨ ----
+echo   [¿ØÖÆÌ¨] Æô¶¯ÖĞ ...
+if exist "%BASE%\OutlookRegister\web_console.py" (
     netstat -ano | findstr ":9090" | findstr LISTENING >nul
     if !errorlevel!==0 (
-        echo   [ï¿½ï¿½ï¿½ï¿½Ì¨] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½9090ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        echo   [¿ØÖÆÌ¨] ÒÑÔÚÔËĞĞ£¨9090£©£¬Ìø¹ı¡£
     ) else (
-        start "web_console" /D "D:\out\OutlookRegister" "D:\out\OutlookRegister\.venv\Scripts\python" "D:\out\OutlookRegister\web_console.py" --port 9090
-        echo   [ï¿½ï¿½ï¿½ï¿½Ì¨] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë¿ï¿½ 9090ï¿½ï¿½
+        start "web_console" /D "%BASE%\OutlookRegister" "%BASE%\OutlookRegister\.venv\Scripts\python" "%BASE%\OutlookRegister\web_console.py" --port 9090
+        echo   [¿ØÖÆÌ¨] ÒÑÆô¶¯£¨¶Ë¿Ú 9090£©
     )
 ) else (
-    echo   [ï¿½ï¿½ï¿½ï¿½Ì¨] web_console.py ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    echo   [¿ØÖÆÌ¨] Î´ÕÒµ½ web_console.py£¬Ìø¹ıÆô¶¯¡£
 )
 
 echo.
-echo ============================================
-echo   ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½
-echo ============================================
-echo.
-echo   ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½
-echo     Resin ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£º   http://127.0.0.1:2260
-echo     ×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½     http://127.0.0.1:9090
-echo     easy_proxies ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½http://127.0.0.1:9091
-echo.
-echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½
-echo     1. ï¿½à¼­ D:\out\easy_proxies\config.yaml
-echo         - ï¿½ï¿½ subscriptions ï¿½ï¿½ï¿½ï¿½ï¿½Ó´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-echo     2. ï¿½à¼­ D:\out\resin\.envï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Ä´ï¿½ï¿½ï¿½ï¿½Ë¿Ú£ï¿½
-echo     3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½à¼­ D:\out\OutlookRegister\config.json
-echo.
-echo   ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½Ø±Õ´ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½
-echo.
-pause >nul
+echo   µÈ´ı·şÎñ¾ÍĞ÷£¨×î¶à 30 Ãë£©...
+set /a wait=0
+:wait_loop
+if !wait! geq 30 goto wait_done
+netstat -ano | findstr ":2260" | findstr LISTENING >nul && set /a ok2260=1
+netstat -ano | findstr ":9091" | findstr LISTENING >nul && set /a ok9091=1
+netstat -ano | findstr ":9090" | findstr LISTENING >nul && set /a ok9090=1
+if defined ok2260 if defined ok9091 if defined ok9090 goto wait_done
+set /a wait+=1
+timeout /t 1 /nobreak >nul
+goto wait_loop
+:wait_done
 
+echo.
+echo ============================================
+echo   °²×°Æô¶¯Íê³É£¡
+echo ============================================
+echo.
+echo   ·şÎñµØÖ·£º
+if defined ok2260 (echo     Resin ¹ÜÀíÃæ°å£º    http://127.0.0.1:2260   [ÔËĞĞÖĞ]) else (echo     Resin ¹ÜÀíÃæ°å£º    http://127.0.0.1:2260   [Î´¼ì²âµ½])
+if defined ok9091 (echo     easy_proxies ¹ÜÀí£º http://127.0.0.1:9091   [ÔËĞĞÖĞ]) else (echo     easy_proxies ¹ÜÀí£º http://127.0.0.1:9091   [Î´¼ì²âµ½])
+if defined ok9090 (echo     ×¢²á»ú¿ØÖÆÌ¨£º      http://127.0.0.1:9090   [ÔËĞĞÖĞ]) else (echo     ×¢²á»ú¿ØÖÆÌ¨£º      http://127.0.0.1:9090   [Î´¼ì²âµ½])
+echo.
+echo   ºóĞøÅäÖÃ£º
+echo     1. ±à¼­ %BASE%\easy_proxies\config.yaml Ìí¼Ó¶©ÔÄÁ´½Ó
+echo     2. ±à¼­ %BASE%\resin\.env ĞŞ¸Ä´úÀí¶Ë¿Ú£¨Èç Clash ¶Ë¿Ú²»Í¬£©
+echo     3. ±à¼­ %BASE%\OutlookRegister\config.json µ÷Õû×¢²á²ÎÊı
+echo.
+echo   °´ÈÎÒâ¼ü´ò¿ª×¢²á»ú¿ØÖÆÌ¨ ...
+pause >nul
 start http://127.0.0.1:9090
