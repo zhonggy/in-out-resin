@@ -173,6 +173,17 @@ if not exist "%BASE%\resin\resin.exe" (
 
 if not exist "%BASE%\resin\.env" (
     echo   生成 .env 配置 ...
+    rem 自动检测本地 Clash 代理(7897)：有则 resin 走它，没有则直连（海外/无代理环境直连更快）
+    netstat -ano | findstr ":7897" | findstr LISTENING >nul 2>nul
+    if !errorlevel!==0 (
+        set "CFG_HTTP=HTTP_PROXY=http://127.0.0.1:7897"
+        set "CFG_HTTPS=HTTPS_PROXY=http://127.0.0.1:7897"
+        set "CFG_ALL=ALL_PROXY=socks5://127.0.0.1:7897"
+    ) else (
+        set "CFG_HTTP=# 直连模式（未检测到本地代理，海外服务器直连更快）"
+        set "CFG_HTTPS="
+        set "CFG_ALL="
+    )
     (
         echo # 后台管理密钥
         echo RESIN_ADMIN_TOKEN=zgy2322317886
@@ -187,10 +198,10 @@ if not exist "%BASE%\resin\.env" (
         echo RESIN_LISTEN_ADDRESS=0.0.0.0
         echo RESIN_PORT=2260
         echo.
-        echo # 走本地 Clash 代理（按实际端口修改）
-        echo HTTP_PROXY=http://127.0.0.1:7897
-        echo HTTPS_PROXY=http://127.0.0.1:7897
-        echo ALL_PROXY=socks5://127.0.0.1:7897
+        echo # 上游代理（自动检测：有本地 Clash 则使用，否则直连）
+        echo(!CFG_HTTP!
+        echo(!CFG_HTTPS!
+        echo(!CFG_ALL!
         echo.
         echo # 本地地址跳过代理
         echo NO_PROXY=127.0.0.1,localhost
