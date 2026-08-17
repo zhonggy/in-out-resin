@@ -225,9 +225,26 @@ if not exist ".venv" (
     echo   创建虚拟环境 ...
     python -m venv .venv
 )
+echo   为系统 Python 安装 requests（兜底，防止控制台被裸 python 启动时缺库）...
+python -m pip install -q requests
+
 echo   安装 Python 依赖 ...
 ".venv\Scripts\python" -m pip install -q --upgrade pip
 ".venv\Scripts\pip" install -q -r requirements.txt
+
+echo   校验 requests 依赖 ...
+".venv\Scripts\python" -c "import requests" >nul 2>nul
+if !errorlevel! neq 0 (
+    echo   [重试] 单独安装 requests ...
+    ".venv\Scripts\pip" install -q requests
+    ".venv\Scripts\python" -c "import requests" >nul 2>nul
+    if !errorlevel! neq 0 (
+        echo   [错误] requests 安装失败，请检查网络后重试。
+        pause
+        exit /b 1
+    )
+)
+
 echo   安装 Chromium（注册流程浏览器）...
 ".venv\Scripts\patchright" install chromium
 echo [OutlookRegister] 安装完成。
@@ -343,7 +360,11 @@ if exist "%BASE%\OutlookRegister\web_console.py" (
     if !errorlevel!==0 (
         echo   [控制台] 已在运行（9090），跳过。
     ) else (
-        start "web_console" /D "%BASE%\OutlookRegister" "%BASE%\OutlookRegister\.venv\Scripts\python" "%BASE%\OutlookRegister\web_console.py" --port 9090
+        if exist "%BASE%\OutlookRegister\.venv\Scripts\python.exe" (
+            start "web_console" /D "%BASE%\OutlookRegister" "%BASE%\OutlookRegister\.venv\Scripts\python" "%BASE%\OutlookRegister\web_console.py" --port 9090
+        ) else (
+            start "web_console" /D "%BASE%\OutlookRegister" python "%BASE%\OutlookRegister\web_console.py" --port 9090
+        )
         echo   [控制台] 已启动（端口 9090）
     )
 ) else (
